@@ -1,0 +1,34 @@
+\documentclass{homework}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+
+\course{Ideals, Varieties, and Algorithms}
+\title{Week 2}
+\author{Andrew Li}
+
+\newcommand{\lex}{\textbf{lex}}
+\newcommand{\grlex}{\textbf{grlex}}
+\newcommand{\grevlex}{\textbf{grevlex}}
+
+\begin{document}
+    \maketitle
+    
+    \setcounter{section}{2}
+    \setcounter{subsection}{1}
+    \subsection{Problem 2}
+    
+    Each of the following polynomials is written with its monomials ordered according to (exactly) one of $\lex$, $\grlex$, or $\grevlex$ order. Determine which monomial order was used in each case.
+    \begin{enumerate}[(a)]
+        \item $f(x, y, z) = 7x^2y^4z - 2xy^6 + x^2y^2$
+        \item $f(x, y, z) = xy^3z + xy^2z^2 + x^2z^3$
+        \item $f(x, y, z) = x^4y^5z + 2x^3y^2z - 4xy^2z^4$
+    \end{enumerate}
+    
+    \subsubsection{Solution}
+    
+    \begin{enumerate}[(a)]
+        \item The first two terms have exponent-tuples $\alpha = (2, 4, 1)$ and $\beta = (1, 6, 0)$ respectively. Since $|\alpha| = |\beta| = 7$, we check the difference $\alpha - \beta = (1, -2, 1)$. Since the polynomial has $\alpha > \beta$, and both the leftmost nonzero entry is positive and the rightmost nonzero entry is not negative, the monomial ordering is $\grlex$.
+        \item Again, examine the first two exponent-tuples $\alpha = (1, 3, 1)$ and $\beta = (1, 2, 2)$. Since $|\alpha| = |\beta| = 5$, we check the difference $\alpha - \beta = (0, 1, -1)$. Since the leftmost nonzero entry is positive and the rightmost nonzero entry is negative, we cannot be sure if it is $\grlex$ or $\grevlex$. We check the second and third exponent-tuples, $\beta = (1, 2, 2)$ and $\gamma = (2, 0, 3)$. Their difference $\beta - \gamma = (-1, 2, -1)$ with the leftmost and rightmost nonzero entry being negative, so the ordering must be $\grevlex$.
+        \item Observe that the first term has factor $x^4$, the second $x^3$, and the third $x$. We conclude that $\lex$ ordering is used.
+    \end{enumerate}
+\end{document}
