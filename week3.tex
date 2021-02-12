@@ -1,0 +1,50 @@
+\documentclass{homework}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{pythonhighlight}
+
+\course{Ideals, Varieties, and Algorithms}
+\title{Week 3}
+\author{Andrew Li}
+
+\begin{document}
+    \maketitle
+    
+    \setcounter{section}{2}
+    \setcounter{subsection}{4}
+    \subsection{Problem 12}
+    
+    Show that if we take as hypothesis that every ascending chain of ideals in $k[x_1, \dots, x_n]$ stabilizes, then the conclusion of the Hilbert Basis Theorem is a consequence.
+    
+    \subsubsection{Solution}
+    \begin{proof}
+        We want to show that the ascending chain condition implies every ideal is finitely generated. Suppose for a contradiction we have some nontrivial ideal $I$ that is not finitely generated. Then choose some $f_1 \in I$. Since $I$ is not finitely generated, surely $\langle f_1 \rangle \neq I$, and so we can choose some other $f_2 \in I$ that satisfies $f_2 \not\in \langle f_1 \rangle$. Observe thus that
+        \[\langle f_1 \rangle \subsetneq \langle f_1, f_2 \rangle.\]
+        We can continue choosing $f_i \in I$ such that $f_i \not\in \langle f_1, f_2, \dots, f_{i-1} \rangle$ and create the infinite strictly ascending chain of ideals
+        \[\langle f_1 \rangle \subsetneq \langle f_1, f_2 \rangle \subsetneq \langle f_1, f_2, f_3 \rangle \subsetneq \cdots\]
+        But this a contradiction, as we assumed every ascending chain of ideals stabilizes. So evidently, every ideal must be finitely generated.
+    \end{proof}
+    
+    \setcounter{subsection}{7}
+    \subsection{Problem 2}
+    Determine whether $f = x^3z - 2y^2$ is in the ideal $I = \langle xz - y, xy + 2z^2, y - z \rangle$.
+    
+    \subsubsection{Solution}
+    In Sage we can do
+    \begin{python}
+R.<x, y, z> = PolynomialRing(QQ)
+I = R.ideal([x*z - y, x*y + 2*z^2, y - z])
+x^3*z - 2*y^2 in I # => False
+    \end{python}
+    More manually, we can find a Gr\"obner basis 
+    \begin{python}
+R.<x, y, z> = PolynomialRing(QQ)
+I = R.ideal([x*z - y, x*y + 2*z^2, y - z])
+G = I.groebner_basis()
+r = x^3*x - 2*y^2
+for g in G:
+    _, r = r.quo_rem(g)
+r # => -2*y^2 + y, not 0 so not in ideal
+    \end{python}
+\end{document}
+
