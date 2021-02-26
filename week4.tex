@@ -1,0 +1,52 @@
+\documentclass{homework}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{bm}
+
+\course{Ideals, Varieties, and Algorithms}
+\title{Week 4}
+\author{Andrew Li}
+
+\newcommand{\LTg}[1]{\langle\LT{#1}\rangle}
+\newcommand{\LT}[1]{\textsc{lt}\left(#1\right)}
+
+\begin{document}
+    \maketitle
+    
+    \setcounter{section}{3}
+    \setcounter{subsection}{0}
+    \subsection{Problem 6}
+    Some definitions.
+    \begin{itemize}
+        \item \textbf{Product orders.} Suppose we have the polynomial rings $k[x_1, \dots, x_n]$ and  $k[y_1, \dots, y_m]$ and two monomial orderings $>_{\textrm a}$ and $>_{\textrm b}$. For two monomials $x^\alpha y^\gamma$ and $x^\beta y^\delta$, the the product order $>_{\textrm{product}}$ is defined as
+        \[x^\alpha >_{\textrm{a}} x^\beta \quad\quad\text{or}\quad\quad x^\alpha =_{\textrm{a}} x^\beta \quad\text{and}\quad y^\gamma >_{\textrm{b}} y^\delta.\]
+        \item $\bm{l}$\textbf{-th elimination order.} For some integer $1 \leq l \leq n$, the $l$-th elimination order, $>_l$ is defined for exponent tuples $\alpha, \beta \in \mathbb Z_{\geq 0}^n$ by
+        \[\alpha_1 + \dots + \alpha_l > \beta_1 + \dots + \beta_l \quad\quad\text{or}\quad\quad \alpha_1 + \dots + \alpha_l = \beta_1 + \dots + \beta_l \quad\text{and}\quad \alpha >_{\textrm{grevlex}} \beta\]
+    \end{itemize}
+    
+    \begin{enumerate}[(a)]
+        \setcounter{enumi}{1}
+        \item Explain how to create a product order that induces grevlex on both $k[x_1, \dots, x_l]$ and $k[x_{l+1}, \dots, x_n]$ and show that this order is of $l$-th elimination type.
+        \item If $G$ is a Gr\"obner basis for $I \subseteq k[x_1, \dots, x_n]$ for the $l$th-elimination ordering, explain why $G \cap k[x_{l+1}, \dots, x_n]$ is a Gr\"obner basis for the $l$th elimination ideal $I_l \subseteq k[x_{l+1}, \dots, x_n]$ with respect to grevlex.
+    \end{enumerate}
+    
+    \subsubsection{Solution}
+    \begin{enumerate}[(a)]
+        \setcounter{enumi}{1}
+        \item We can create the product order $>_{\textrm{product}}$ that induces $>_{\textrm{grevlex}}$ on both $k[x_1, \dots, x_l]$ and $k[x_{l+1}, \dots, x_n]$. First let $\alpha = (\alpha_1, \dots, \alpha_l)$ and $\beta = (\beta_1, \dots, \beta_l)$, the first portion of exponents of the two monomials in $k[x_1, \dots, x_l]$. Then we order $\alpha >_{\textrm{product}} \beta$ based on the sum of exponents
+        \[|\alpha| = \sum_{i=1}^l \alpha_i > |\beta| = \sum_{i=1}^l \beta_i.\]
+        Now if there is a tie, we examine the latter portion of exponents $\gamma = (\gamma_{l+1}, \dots, \gamma_n)$ and $\delta = (\delta_{l+1}, \dots, \delta_n)$ of the monomials in $k[x_{l+1}, \dots, x_n]$. Then we order $\gamma >_{\textrm{product}} \delta$ based on the usual $>_{\textrm{grevlex}}$ ordering
+        \[\gamma >_{\textrm{grevlex}} \delta.\]
+        This ordering $>_{\textrm{product}}$ produces $>_{\textrm{grevlex}}$ on both $k[x_1, \dots, x_l]$ and $k[x_{l+1}, \dots, x_n]$. This ordering is of $l$-th elimination type since any monomial in only $k[x_1, \dots, x_n]$ will have an first-$l$ exponent sum greater than any monomial in only $k[x_{l+1}, \dots, x_n]$ (which will have an first-$l$ exponent sum of 0).
+        
+        \item \begin{proof}
+            We want to show that given $G$, a Gr\"obner basis for $I$ that was computed with the $l$-th elimination monomial order, we can conclude that $G_l = G \cap k[x_{l+1}, \dots, x_n]$, precisely the polynomials in the Gr\"obner basis in just the variables $x_{l+1}, \dots, x_n$, forms a Gr\"obner basis for the $l$-th elimination ideal $I_l = I \cap k[x_{l+1}, \dots, x_n]$. We will proceed similarly to Theorem 2 of Section 3.1. The only difference is the chosen monomial order. \\
+            
+            So to show $G_l$ is a Gr\"obner basis for $I_l$ we must show $\LTg{I_l} = \LTg{G_l}$. The reverse conclusion is trivial so it will suffice to show $\LTg{I_l} \subseteq \LTg{G_l}$. Thus let some $\LT{f} \in \LTg{I_l}$ for some $f \in I_l$. Since $f \in I$ as well, we know for $\LT f$ is divisible by $\LT g$ for some $g \in G$, the Gr\"obner basis for $I$. \\
+            
+            Now $f \in I_l$ also means that $f$ and $\LT f$ is only in the variables $x_{l+1}, \dots, x_n$. That means that $\LT g$ must also only be in the variables $x_{l+1}, \dots, x_n$. The main observation here is that because $\LT g$ only includes $x_{l+1}, \dots, x_n$, we know the entirety of $g$ must only include $x_{l+1}, \dots, x_n$. \\
+            
+            Suppose for a contradiction there is some monomial term $x^\alpha$ of $g$ that includes one of $x_1, \dots, x_l$. By the $l$-th elimination order, then $x^\alpha > \LT{g}$ because $x^\alpha$ has some nonzero exponent on some $x_1, \dots, x_l$, $\LT{g}$ does not. But then $x^\alpha$ would be the leading term of $g$, so we have a contradiction! It must be that the entirety of $g$ must only include $x_{l+1}, \dots, x_n$. This is exactly the statement that $g \in k[x_{l+1}, \dots, x_n]$, so $g \in G \cap k[x_{l+1}, \dots, x_n] = G_l$. This proves $\LTg{I_l} \subseteq \LTg{G_l}$. 
+        \end{proof}
+    \end{enumerate}
+\end{document}
