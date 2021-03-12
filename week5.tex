@@ -1,0 +1,48 @@
+\documentclass{homework}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+
+\course{Ideals, Varieties, and Algorithms}
+\title{Week 4}
+\author{Andrew Li}
+
+\newcommand{\id}[1]{\langle #1 \rangle}
+\newcommand{\V}{\mathbf{V}}
+\newcommand{\LT}[1]{\textsc{lt}\left(#1\right)}
+\renewcommand{\deg}[1]{\operatorname{deg}(#1)}
+
+\begin{document}
+    \maketitle
+    
+    \setcounter{section}{3}
+    \setcounter{subsection}{2}
+    \subsection{Problem 10}
+    Consider the curve in $\mathbb C^n$ parameterized by $x_i = f_i(t)$, where $f_1, \dots, f_n$ are polynomials in $\mathbb C[t]$. This gives the ideal
+    \[I = \id{x_1 - f_1(t), \dots, x_n - f_n(t)} \subseteq \mathbb C[t, x_1, \dots, x_n].\]
+    \begin{enumerate}[(a)]
+        \item Prove that the parametric equations fill up all of the variety $\V(I_1) \subseteq \mathbb C^n$.
+        \item Show that the conclusion of part (a) may fail if we let $f_1, \dots, f_n$ be rational functions.
+        \item Even if all of the $f_i$'s are polynomials, show that the conclusion of part (a) may fail if we work over $\mathbb R$.
+    \end{enumerate}
+    
+    \subsubsection{Solution}
+    \begin{enumerate}[(a)]
+        \item \begin{proof}
+            Recall the implicitization algorithm for polynomial parametrizations. We first compute a Gr\"obner basis $G = \{g_1, \dots, g_s\}$ for $I$ with respect to the lexicographic ordering where $t > x_i$ for all $x_i$'s. Under this lexicographic ordering, we know that $t$ is ordered before the $x_i$'s, so $\LT{x_1 - f_1(t)} = \LT{f_1(t)}$ which includes only $t$. Now since $x_1 - f_1(t) \in I$ clearly, we conclude $\LT{x_1 - f_1(t)} = \LT{f_1(t)} \in \id{\LT{I}}$. With the Gr\"obner basis, we know that $\LT{f_1(t)} \in \id{\LT{g_1}, \dots, \LT{g_s}}$, or equivalently that $\LT{f_1(t)}$ is divisible by some $\LT{g_i}$. But since $\LT{f_1(t)}$ includes only $t$, $\LT{g_i}$ includes only $t$. So some Gr\"obner basis member contains a term with only $t$, a constant leading coefficient without any dependence on any $x_i$'s. \\
+            
+            Now suppose we have a partial solution $(x_1, \dots, x_n) \in \V(I_1)$. By the Extension Theorem and the fact we showed there is some Gr\"obner basis member with a term with only $t$, that is, a constant leading coefficient that cannot vanish, this partial solution can be extended to some solution $(t, x_1, \dots, x_n) \in \V(I)$ where $t \in \mathbb C$. So we have shown that from any $(x_1, \dots, x_n) \in \V(I_1)$ we can solve for a $t \in \mathbb C$ such that $x_i = f_i(t)$ for all $i$, and thus the parametric equations fill up the entire variety $\V(I_1)$ in $\mathbb C^n$.
+        \end{proof}
+        
+        \item If we allow rational functions $f_i(t) = g_i(t)/h_i(t)$ and consider the ideal
+        \[J = \id{h_1(t)x_1 - g_1(t), \dots, h_n(t)x_n - g_n(t), 1 - h(t)y} \subseteq \mathbb C[y, t, x_1, \dots, x_n],\]
+        where $h(t) = h_1(t) \cdots h_n(t)$. Then the argument in (a) seems to fail when $\LT{h_i(t)x_i - g_i(t)} \neq \LT{g_i(t)}$. This is the case when $\deg{h_i(t)} > \deg{g_i(t)}$. Then it would be ordered first under our lexicographically ordering, and would also have a dependence on $x_i$. Then we cannot apply the Extension Theorem in general. \\
+        
+        Indeed, consider the parametrization $x_1 = 1/t$ and $x_2 = 1/t$ where $\deg{t} > \deg{1}$. Then we have
+        \[J = \id{tx_1 - 1, tx_2 - 1, 1 - t^2y}.\]
+        Computing a Gr\"obner basis for $J$ we have $G = \{y-x_2^2, tx_2-1, x_1-x_2\}$. So $I_1 = \id{x_1 - x_2}$ and $\V(I)$ contains all the points $(a, a)$ for $a \in \mathbb C$, for instance $(0, 0)$. But when we try to use the Extension Theorem on this partial solution to get $t$, we have to solve $t \cdot 0 - 1 = 0$ where the $t$ term has vanished. More concretely, the parametrization $(1/t, 1/t)$ does not contain $(0, 0)$.
+        
+        \item If we work over $\mathbb R$, the Extension Theorem cannot be applied in general either. Consider $x_1 = t^2$ and $x_2 = -t^2$. When we consider
+        \[I = \id{x_1 - t^2, x_2 + t^2}\]
+        and compute the Gr\"obner basis $G = \{t^2 + x_2, x_1 + x_2\}$, we find the smallest variety containing the parametrization is the set of points $(a, -a)$ for $a \in \mathbb R$, such as $(-1, 1)$. But when we try to use the Extension Theorem on this partial solution we have to solve $t^2 + 1 = 0$, impossible over the reals (it is not algebraically closed).
+    \end{enumerate}
+\end{document}
