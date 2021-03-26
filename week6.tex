@@ -6,12 +6,28 @@
 \title{Week 6}
 \author{Andrew Li}
 
+\newtheorem*{definition}{Definition}
+\newcommand{\cg}[1]{\langle #1 \rangle}
+
 \begin{document}
     \maketitle
     
     \setcounter{section}{4}
+    \subsection{Problem 2}
+    Let $J = \cg{x^2+y^2-1, y-1}$. Find $f \in \mathbf I(\mathbf V(J))$ such that $f \not\in J$.
+    \subsubsection{Solution}
+    Geometrically, the variety $\mathbf V(J)$ includes only the common zero a circle of radius 1 centered at the origin and the line $y = 1$. So $\mathbf V(J) = \{(0, 1)\}$. Now we'll look for a function in $k[x, y]$ that has $(0, 1)$ as a zero, but notice it cannot have $y-1$ cannot be a factor. So consider the polynomial $x$ with root $(0, 1)$. It also is not in $J$ since it has $x$ with degree 1. So $x \in \mathbf I(\mathbf V(J))$ but $x \not\in J$
+    
     \setcounter{subsection}{1}
     \subsection{Problem 4}
+    \begin{definition}
+        An ideal $I$ is \textbf{radical} if $f^m \in I$ for some integer $m \geq 1$ implies that $f \in I$.
+    \end{definition}
+    \begin{definition}
+        Let $I \subseteq k[x_1, \dots, x_n]$ be an ideal. The \textbf{radical} of $I$, denoted $\sqrt I$, is the set
+        \[\{f \,\vert\, f^m \in I \text{ for some integer } m \geq 1\}.\]
+    \end{definition}
+    
     Let $I$ be an ideal in $k[x_1, \dots, x_n]$, where $k$ is an arbitrary field.
     \begin{enumerate}[(a)]
         \item Show that $\sqrt{I}$ is a radical ideal.
@@ -21,6 +37,16 @@
     
     \subsubsection{Solution}
     \begin{enumerate}[(a)]
-        \item 
+        \item \begin{proof}
+            Suppose for some $f \in k[x_1, \dots, x_n]$ and integer $m \geq 1$, $f^m \in \sqrt I$. Then for some integer $k \geq 1$, we know $(f^m)^k = f^{mk} \in I$. But since $mk \geq 1$ is an integer, so $f \in \sqrt I$ by the definition of $\sqrt I$.
+        \end{proof}
+        \item \begin{proof}
+            Suppose $I$ is radical. We have $I \subseteq \sqrt I$ since if $f \in I$, then $f^1 = f \in \sqrt I$, so we want to show $\sqrt I \subseteq I$. Let $f \in \sqrt I$. Then $f^m \in I$ for some positive integer $m$. But $I$ is radical, so $f^m \in I$ implies $f \in I$. Thus $\sqrt I \subseteq I$ and we conclude $I = \sqrt I$.
+            
+            Now suppose $I = \sqrt I$. We want to show $I$ is radical, so suppose $f^m \in I$. But then $f^m \in \sqrt I$, which, as shown before, is a radical ideal. Thus $f \in \sqrt I$, but this is just $f \in I$, so $I$ is radical.
+        \end{proof}
+        \item \begin{proof}
+            Like before, $\sqrt I \subseteq \sqrt{\sqrt{I}}$ is easy to show. We focus on showing $\sqrt{\sqrt{I}} \subseteq \sqrt I$. Suppose $f \in \sqrt{\sqrt{I}}$. Then $f^m \in \sqrt I$, and since $\sqrt I$ is radical, $f \in \sqrt I$. So $\sqrt{\sqrt{I}} = \sqrt I$.
+        \end{proof}
     \end{enumerate}
 \end{document}
