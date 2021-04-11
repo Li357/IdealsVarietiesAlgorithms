@@ -1,0 +1,44 @@
+\documentclass{homework}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+
+\course{Ideals, Varieties, and Algorithms}
+\title{Week 9}
+\author{Andrew Li}
+
+\newcommand{\cg}[1]{\langle #1 \rangle}
+
+\begin{document}
+    \maketitle
+    
+    \setcounter{section}{4}
+    \setcounter{subsection}{5}
+    \subsection{Problem 10}
+    Let $f \in \mathbb C[x_1, \dots, x_n]$ and let $f = f_1^{a_1}f_2^{a_2} \cdots f_r^{a_r}$ be the decomposition of $f$ into irreducible factors. Show that $\mathbf V(f) = \mathbf V(f_1) \cup \cdots \cup \mathbf V(f_r)$ is the decomposition of $\mathbf V(f)$ into irreducible components and $\mathbf I(\mathbf V(f)) = \cg{f_1f_2\cdots f_r}$.
+    
+    \begin{proof}
+        First we will show that $\cg{f_i}$ is prime, which will tell us that $\mathbf V(f_i)$ is irreducible. Observe that $f_i$ is in the algebraically closed field $\mathbb C$, so it must have some root in $a \in \mathbb C$ and have the factor $x - a$. But it is also irreducible so $f_i = k(x-a)$ for some constant $k \in \mathbb C$ and $\cg{f_i} = \cg{k(x-a)} = \cg{x-a}$. By Proposition 9 of \S4.5 we know that any ideal of the form $\cg{x-a}$ is maximal, and by Proposition 10 is thus prime. So $\cg{f_i}$ is prime. But now observe that $\cg{f_i} = \mathbf I(\mathbf V(f_i))$ since $\cg{f_i}$ is a radical ideal, and so by Proposition 3, $\mathbf V(f_i)$ is irreducible. \\
+        % Note this argument could have been simplified by using UFDs where irreducible implies prime but for the sake of the chapter...
+        
+        So we have that $\mathbf V(f_1) \cup \cdots \cup \mathbf V(f_r)$ is a decomposition of irreducible components. What is left to show is the equality $\mathbf V(f) = \mathbf V(f_1) \cup \cdots \cup \mathbf V(f_r)$. Observe that
+        \[\mathbf V(f_i^{a_i}) = \underbrace{\mathbf V(f_i) \cup \cdots \cup \mathbf V(f_i)}_{a_i \text{ unions}} = \mathbf V(f_i).\]
+        So,
+        \[\mathbf V(f) = \mathbf V(f_1^{a_1}) \cup \cdots \cup \mathbf V(f_r^{a_r}) = \mathbf V(f_1) \cup \cdots \cup \mathbf V(f_r).\]
+        Additionally, by the ideal-variety correspondence, $\mathbf I(\mathbf V(f)) = \sqrt{\cg{f}} = \sqrt{\cg{f_1^{a_1}f_2^{a_2} \cdots f_r^{a_r}}}$. This radical ideal consists of every polynomial with at least of one each $f_i$ as a factor, so it is just $\cg{f_1f_2 \cdots f_r}$.
+    \end{proof}
+    
+    \setcounter{section}{5}
+    \setcounter{subsection}{3}
+    \subsection{Problem 9}
+    Let $\alpha : V \rightarrow W$ and $\beta : W \rightarrow V$ be inverse polynomial mappings between two isomorphic varieties $V$ and $W$. Let $U = \mathbf V_V(I)$ for some ideal $I \subseteq k[V]$. Show that $\alpha(U)$ is a subvariety of $W$ and explain how to find an ideal $J \subseteq k[W]$ such that $\alpha(U) = \mathbf V_W(J)$.
+    
+    \setcounter{section}{8}
+    \setcounter{subsection}{1}
+    \subsection{Problem 1}
+    In this exercise, we will give a more geometric way to describe the construction of $\mathbb P^n(k)$. Let $\mathcal L$ denote the set of lines through the origin in $k^{n+1}$.
+    \begin{enumerate}[(a)]
+        \item Show that every element of $\mathcal L$ can be represented as the set of scalar multiples of some nonzero vector in $k^{n+1}$.
+        \item Show that two nonzero vectors $v'$ and $v$ in $k^{n+1}$ define the same element of $\mathcal L$ if and only if $v' \sim v$ as in Definition 1.
+        \item Show that there is a one-to-one correspondence between $\mathbb P^n(k)$ and $\mathcal L$.
+    \end{enumerate}
+\end{document}

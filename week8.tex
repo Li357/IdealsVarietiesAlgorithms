@@ -1,0 +1,32 @@
+\documentclass{homework}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{xcolor}
+
+\course{Ideals, Varieties, and Algorithms}
+\title{Week 8}
+\author{Andrew Li}
+
+\begin{document}
+    \maketitle
+    
+    \setcounter{section}{4}
+    \setcounter{subsection}{3}
+    \subsection{Problem 14}
+    Let $I, J \subseteq k[x_1, \dots, x_n]$ be ideals. Prove that $I:J^\infty = I:J^N$ if and only if $I:J^N = I:J^{N+1}$. Then use this to describe an algorithm for computing the saturation $I:J^\infty$ based on the algorithm for computing ideal quotients.
+    
+    \subsubsection{Solution}
+    \begin{proof}
+        We will show the forward implication first. Suppose $I:J^\infty = I:J^N$. The inclusion $I:J^N \subseteq I:J^{N+1}$ is clear. The inclusion $I:J^{N+1} \subseteq I:J^\infty = I:J^N$ is also clear, thus $I:J^N = I:J^{N+1}$. Intuitively, this is because $I:J^\infty = I:J^N$ means precisely that $I:J^N$ has stabilized. \\
+        
+        Now suppose $I:J^N = I:J^{N+1}$. Is this sufficient to conclude $I:J^N$ has stabilized, i.e. can we conclude $I:J^\infty = I:J^N$? I'm not sure. It seems like there could feasibly be some sufficiently large $M > N+1$ such that
+        \[I:J^N = I:J^{N+1} \subset I:J^{M} = I:J^\infty,\]
+        since powers of an ideal need only follow the weak ascending chain condition
+        \[J^M \subseteq J^{M-1} \subseteq \cdots \subseteq J^{N+1} \subseteq J^N.\]
+        It could be that there exists some intermediary $J^i$ such that inclusion is strictly proper
+        \[J^M \subseteq J^{M-1} \subseteq \cdots {\color{red} \boldsymbol{\subset}\,} J^i \subseteq \cdots \subseteq J^{N+1} \subseteq J^N,\]
+        in which case $I:J^N \subset I:J^i \subseteq I:J^M = I:J^\infty$ and our claim is false. I can't think of an ideal that behaves something like $J^2 = J$ but $J^3 \subset J^2$ though.
+    \end{proof}
+    
+    An algorithm, albeit a very inefficient one, to calculate the saturation $I:J^\infty$ could be to calculate the reduced Gr\"obner bases for $I:J$ and $I:J^2$ as described in Theorem 14 and checking if they are equal. If they are, then $I:J^\infty = I:J$. If not, repeat for $I:J^2$ and $I:J^3$ and so on until $I:J^N = I:J^{N+1}$. Then for that $N$, $I:J^N = I:J^\infty$. This program also always terminates for sufficiently large $N$.
+\end{document}
